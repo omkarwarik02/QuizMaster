@@ -57,46 +57,54 @@ function QuizScreen() {
             setCurrentQuestion(currentQuestion + 1)
         }
     }
-   return (
-    <div>
+return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-600 to-blue-500 flex items-center justify-center">
         {finished ? (
-            <div>
-                <h1>Quiz Finished! 🎉</h1>
-                <p>Your Score: {score} / {questions.length}</p>
-                <button onClick={() => {
-                    setCurrentQuestion(0)
-                    setScore(0)
-                    setSelected(null)
-                    setFinished(false)
-                }}>Play Again 🔄</button>
+            <div className="bg-white rounded-2xl shadow-2xl p-10 text-center max-w-md w-full">
+                <h1 className="text-4xl font-bold text-purple-600 mb-4">Quiz Finished! 🎉</h1>
+                <p className="text-2xl text-gray-600 mb-8">Your Score: <span className="font-bold text-purple-600">{score} / {questions.length}</span></p>
+                <button
+                    onClick={() => {
+                        setCurrentQuestion(0)
+                        setScore(0)
+                        setSelected(null)
+                        setFinished(false)
+                    }}
+                    className="bg-purple-600 hover:bg-purple-700 text-white font-bold px-8 py-3 rounded-full text-lg transition-all"
+                >
+                    Play Again 🔄
+                </button>
             </div>
         ) : (
-            <div>
-                <h2>{current.question}</h2>
-                <p>⏱️ Time Left: {timeLeft}s</p>
-                <div>
+            <div className="bg-white rounded-2xl shadow-2xl p-10 max-w-md w-full">
+                <div className="flex justify-between items-center mb-6">
+                    <span className="text-gray-400 font-medium">Question {currentQuestion + 1} / {questions.length}</span>
+                    <span className={`font-bold text-lg ${timeLeft <= 3 ? "text-red-500" : "text-purple-600"}`}>⏱️ {timeLeft}s</span>
+                </div>
+                <h2 className="text-2xl font-bold text-gray-800 mb-6">{current.question}</h2>
+                <div className="flex flex-col gap-3">
                     {current.options.map((option, index) => (
                         <button
                             key={index}
                             onClick={() => setSelected(option)}
-                            style={{
-                                background: selected === option ? "blue" : "grey",
-                                color: selected === option ? "white" : "black"
-                            }}
+                            className={`py-3 px-5 rounded-xl text-left font-medium transition-all border-2 ${selected === option ? "bg-purple-600 text-white border-purple-600" : "bg-gray-50 text-gray-700 border-gray-200 hover:border-purple-400"}`}
                         >
                             {option}
                         </button>
                     ))}
                 </div>
                 {selected && (
-                    <button onClick={haddleNext}>Next Question ➡️</button>
+                    <button
+                        onClick={haddleNext}
+                        className="mt-6 w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-full text-lg transition-all"
+                    >
+                        Next Question ➡️
+                    </button>
                 )}
             </div>
         )}
     </div>
 )
-
-
 
 
 
