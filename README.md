@@ -42,3 +42,33 @@ src/
 ├── App.jsx
 ├── main.jsx
 └── index.css
+
+## ⚙️ Run Locally
+
+Clone the project:
+```bash
+git clone https://github.com/yourusername/quizmaster.git
+```
+
+Go to project directory:
+```bash
+cd quizmaster
+```
+
+Install dependencies:
+```bash
+npm install
+```
+
+Start the server:
+```bash
+npm run dev
+```
+
+## 👨‍💻 Author
+
+**Omkar**
+- GitHub: [@yourusername](https://github.com/yourusername)
+
+## 📝 License
+This project is open source and available under the [MIT License](LICENSE).
