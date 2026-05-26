@@ -3,7 +3,7 @@
 A fun and interactive quiz app built with React and Tailwind CSS.
 
 ## 🚀 Live Demo
-[Click here to play QuizMaster](https://your-vercel-link.vercel.app)
+[Click here to play QuizMaster](https://quiz-master-tau-lovat.vercel.app/)
 
 ## 📸 Features
 
