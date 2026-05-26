@@ -1,23 +1,49 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
+import { CategoryContext } from "../context/CategoryContext"
 const questions = [
     {
         question: "What is the capital of India?",
         options: ["Mumbai", "Delhi", "Kolkata", "Chennai"],
-        answer: "Delhi"
+        answer: "Delhi",
+        category: "Geography"
     },
     {
         question: "What is 2 + 2?",
         options: ["3", "4", "5", "6"],
-        answer: "4"
+        answer: "4",
+        category: "Math"
     },
     {
         question: "Which planet is closest to the sun?",
         options: ["Earth", "Venus", "Mercury", "Mars"],
-        answer: "Mercury"
+        answer: "Mercury",
+        category: "Science"
+    },
+    {
+        question: "What is the capital of France?",
+        options: ["London", "Berlin", "Paris", "Rome"],
+        answer: "Paris",
+        category: "Geography"
+    },
+    {
+        question: "What is 5 x 5?",
+        options: ["20", "25", "30", "35"],
+        answer: "25",
+        category: "Math"
+    },
+    {
+        question: "What is the chemical symbol for water?",
+        options: ["CO2", "H2O", "O2", "NaCl"],
+        answer: "H2O",
+        category: "Science"
     }
 ]
 
 function QuizScreen() {
+
+    const {category} = useContext(CategoryContext)
+
+    const filteredQuestion = category === "All" ? questions : questions.filter(q => q.category === category)
 
     const [currentQuestion, setCurrentQuestion] = useState(0)
     const [selected, setSelected] = useState(null)
@@ -25,7 +51,28 @@ function QuizScreen() {
     const [finished, setFinished] = useState(false)
     const [timeLeft, setTimeLeft] = useState(10)
 
-    const current = questions[currentQuestion]
+    const current = filteredQuestion[currentQuestion]
+
+
+
+  function haddleNext() {
+    
+        if(selected === current.answer){
+            setScore(score + 1)
+        }
+        setSelected(null)
+        
+        if(currentQuestion + 1 === filteredQuestion.length){
+             setFinished(true)
+        } else {
+            setCurrentQuestion(currentQuestion + 1)
+        }
+    }
+
+
+
+
+
  useEffect(() => {
     const timer = setInterval(() => {
         setTimeLeft(prev => {
@@ -38,31 +85,22 @@ function QuizScreen() {
         })
     }, 1000)
 
+
+
+    
     return () => {
         clearInterval(timer)
         setTimeLeft(10)
     }
 }, [currentQuestion])
 
-    function haddleNext() {
-    
-        if(selected === current.answer){
-            setScore(score + 1)
-        }
-        setSelected(null)
-        
-        if(currentQuestion + 1 === questions.length){
-             setFinished(true)
-        } else {
-            setCurrentQuestion(currentQuestion + 1)
-        }
-    }
+  
 return (
     <div className="min-h-screen bg-gradient-to-br from-purple-600 to-blue-500 flex items-center justify-center">
         {finished ? (
             <div className="bg-white rounded-2xl shadow-2xl p-10 text-center max-w-md w-full">
                 <h1 className="text-4xl font-bold text-purple-600 mb-4">Quiz Finished! 🎉</h1>
-                <p className="text-2xl text-gray-600 mb-8">Your Score: <span className="font-bold text-purple-600">{score} / {questions.length}</span></p>
+                <p className="text-2xl text-gray-600 mb-8">Your Score: <span className="font-bold text-purple-600">{score} / {filteredQuestion.length}</span></p>
                 <button
                     onClick={() => {
                         setCurrentQuestion(0)
@@ -78,7 +116,7 @@ return (
         ) : (
             <div className="bg-white rounded-2xl shadow-2xl p-10 max-w-md w-full">
                 <div className="flex justify-between items-center mb-6">
-                    <span className="text-gray-400 font-medium">Question {currentQuestion + 1} / {questions.length}</span>
+                    <span className="text-gray-400 font-medium">Question {currentQuestion + 1} / {filteredQuestion.length}</span>
                     <span className={`font-bold text-lg ${timeLeft <= 3 ? "text-red-500" : "text-purple-600"}`}>⏱️ {timeLeft}s</span>
                 </div>
                 <h2 className="text-2xl font-bold text-gray-800 mb-6">{current.question}</h2>
