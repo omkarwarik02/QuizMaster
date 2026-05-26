@@ -32,3 +32,13 @@ A fun and interactive quiz app built with React and Tailwind CSS.
 - Event handling
 
 ## 📂 Project Structure
+src/
+├── components/
+│   ├── HomeScreen.jsx
+│   └── QuizScreen.jsx
+├── context/
+│   ├── CategoryContext.jsx
+│   └── CategoryProvider.jsx
+├── App.jsx
+├── main.jsx
+└── index.css
